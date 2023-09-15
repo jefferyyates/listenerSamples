@@ -1,10 +1,32 @@
-import { Actions } from "@twilio/flex-ui";
+import { Actions, Manager } from "@twilio/flex-ui";
 const PLUGIN = "SIP-OUTBOUND-DIAL";
 
-// Adding a listener
-Actions.addListener('beforeStartOutboundCall', (payload) => {
-    console.log(PLUGIN,` - beforeStartOutboundCall Listener Triggered`);
+// Adding a workerClient listener
+Manager.getInstance().workerClient.on('reservationCreated', (reservation) => {
 
+    let Flex = Twilio.Flex;
+
+    let mediaId = Flex.AudioPlayerManager.play({
+        url: 'https://api.twilio.com/cowbell.mp3',
+        repeatable: true,
+    })
+
+    reservation.on('accepted', () => Flex.AudioPlayerManager.stop(mediaId))
+    reservation.on('canceled', () => Flex.AudioPlayerManager.stop(mediaId))
+    reservation.on('completed', () => Flex.AudioPlayerManager.stop(mediaId))
+    reservation.on('rejected', () => Flex.AudioPlayerManager.stop(mediaId))
+    reservation.on('rescinded', () => Flex.AudioPlayerManager.stop(mediaId))
+    reservation.on('timeout', () => Flex.AudioPlayerManager.stop(mediaId))
+    reservation.on('wrapup', () => Flex.AudioPlayerManager.stop(mediaId))
+})
+
+// Adding a WrapUpTask action listener
+Actions.addListener('beforeWrapupTask', (payload) => {
+    Actions.invokeAction("SendMessage", { body: "Task Wrapup message", conversationSid: payload.task.attributes.conversationSid });
+})
+
+// Adding a StartOutboundCall action listener
+Actions.addListener('beforeStartOutboundCall', (payload) => {
     /* 
     
         CRITICAL!!!! Update emergencyNumbers to include any emergency numbers relevant to your business  CRITICAL!!!!
