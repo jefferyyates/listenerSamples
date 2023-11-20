@@ -40,13 +40,14 @@ Actions.addListener('beforeStartOutboundCall', (payload) => {
 
     // Emergency Dialing Excemption
 
+    console.log(PLUGIN,` payload`, payload);
     const emergencyNumbers = ["911", "060", "065"];
     if (emergencyNumbers.some(n => payload.destination.match(n))) {
         console.log(PLUGIN,` - Emergency Number Dialed!`);
-
     } else {
         // List of number(s) or range(s) you wish to leverage as a SIP target
-        const numbers = ["+13179519753","13179519753"];
+        const numbers = ["+13179519753","13179519753", "+18556998340", "18556998340", "9000", "9003"];
+        console.log(PLUGIN, `original payload.destination: ${payload.destination}`);
         if (numbers.some(n => payload.destination.includes(n))) {
             console.log(PLUGIN,` - Match found, leveraging SIP target!`);
 
@@ -54,9 +55,10 @@ Actions.addListener('beforeStartOutboundCall', (payload) => {
             payload.taskAttributes = {to: payload.destination};
             // Match found, we will overwrite the payload destintation to leverage a SIP Enpoint/Interface target
             // REPLACE the @xxxx with your SIP Endpoint
-            payload.destination = `sip:${payload.destination}@xxxx`;
+            payload.destination = `sip:${payload.destination}@179.190.50.254:5060`;
         } else {
             console.log(PLUGIN,` - Non-SIP call taken!`);
         }
+        console.log(PLUGIN, `final payload.destination: ${payload.destination}`);
     }
 });
