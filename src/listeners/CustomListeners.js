@@ -46,7 +46,7 @@ Actions.addListener('beforeStartOutboundCall', (payload) => {
         console.log(PLUGIN,` - Emergency Number Dialed!`);
     } else {
         // List of number(s) or range(s) you wish to leverage as a SIP target
-        const numbers = ["+18556998340", "18556998340", "9000", "9003", "2101", "2254"];
+        const numbers = ["+18556998340", "18556998340", "9000", "9003"];
         console.log(PLUGIN, `original payload.destination: ${payload.destination}`);
         if (numbers.some(n => payload.destination.includes(n))) {
             console.log(PLUGIN,` - Match found, leveraging SIP target!`);
