@@ -1,5 +1,5 @@
 import * as FlexPlugin from '@twilio/flex-plugin';
 
-import OutboundDialingSipPlugin from './OutboundDialingSipPlugin';
+import CustomListenersSamplePlugin from './CustomListenersSamplePlugin';
 
-FlexPlugin.loadPlugin(OutboundDialingSipPlugin);
+FlexPlugin.loadPlugin(CustomListenersSamplePlugin);

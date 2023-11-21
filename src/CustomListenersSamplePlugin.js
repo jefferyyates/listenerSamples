@@ -4,9 +4,9 @@ import { FlexPlugin } from '@twilio/flex-plugin';
 // import the custom listeners
 import './listeners/CustomListeners';
 
-const PLUGIN_NAME = 'OutboundDialingSipPlugin';
+const PLUGIN_NAME = 'CustomListenersSamplePlugin';
 
-export default class OutboundDialingSipPlugin extends FlexPlugin {
+export default class CustomListenersSamplePlugin extends FlexPlugin {
   constructor() {
     super(PLUGIN_NAME);
   }

@@ -1,5 +1,5 @@
 import { Actions, Manager } from "@twilio/flex-ui";
-const PLUGIN = "SIP-OUTBOUND-DIAL";
+const PLUGIN = "CUSTOM-LISTENERS";
 
 // Adding a workerClient listener
 Manager.getInstance().workerClient.on('reservationCreated', (reservation) => {
